@@ -3,335 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workflow Aziendale - Strategia Trasformazione ERP</title>
+    <title>Workflow Order to Cash</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f3f4f6;
-            color: #1f2937;
+            background-color: #ffffff;
+            color: #1e293b;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Titolo principale aggiornato con i colori dell'immagine */
-        h1 {
+        .workflow-container {
+            max-width: 1250px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: relative;
+        }
+
+        /* --- SVG per le Frecce di Collegamento Superiori (2 linee) --- */
+        .svg-connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 240px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* --- Sezione Ingressi Superiori (Inputs) --- */
+        .top-inputs {
+            display: flex;
+            justify-content: flex-start;
+            gap: 30px;
+            padding-left: 10px;
+            position: relative;
+            z-index: 2;
+            height: 80px;
+        }
+
+        .input-card {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 10px 15px;
+            width: 130px;
+            height: 75px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #334155;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            text-align: center;
-            color: #1e3a8a; /* Blu scuro principale */
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #3b82f6;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            gap: 8px;
+            border-top: 3px solid #1d4ed8;
+            box-sizing: border-box;
         }
 
-        h1 span.subtitle {
-            font-size: 18px;
-            color: #0284c7; /* Celeste Order-to-Cash */
-            font-weight: 600;
-        }
+        .input-card.provvigioni { border-top-color: #eab308; }
+        .input-icon { font-size: 18px; }
 
-        /* Container Principale a Griglia */
-        .dashboard-container {
+        /* --- Griglia Principale --- */
+        .grid-flow-layout {
             display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 25px;
-            max-width: 1600px;
-            margin: 0 auto;
+            grid-template-columns: 290px 40px 160px 40px 160px 40px 220px;
+            grid-template-rows: auto auto;
+            row-gap: 20px;
+            align-items: start; 
+            position: relative;
+            z-index: 2;
         }
 
-        /* Sezione Sinistra: Flusso Lineare Order-to-Cash */
-        .main-flow-section {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            border-top: 6px solid #1d4ed8;
+        /* Connettori a freccia orizzontali */
+        .arrow-connector {
+            color: #a21caf;
+            font-size: 24px;
+            font-weight: bold;
+            user-select: none;
+            text-align: center;
+            margin-top: 40px;
         }
 
-        .section-title {
+        .vertical-arrow-purple {
+            color: #a21caf;
             font-size: 20px;
             font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            text-align: center;
+            margin: 5px 0;
         }
 
-        /* Timeline / Processo Sequenziale */
-        .process-timeline {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: space-between;
-            position: relative;
-            margin-top: 15px;
-        }
-
-        /* Singolo Step del Processo */
-        .process-step {
-            flex: 1;
-            min-width: 140px;
-            background: #f8fafc;
+        /* Card del Flusso Core */
+        .flow-card {
+            background: white;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            padding: 12px;
-            text-align: center;
+            padding: 20px;
+            height: 110px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            transition: all 0.2s ease;
-            cursor: pointer;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            box-sizing: border-box;
         }
 
-        .process-step:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            border-color: #3b82f6;
-            background: #f0fdf4;
+        /* Blocco Colonna 1 (Contiene Offerte e la riga affiancata sotto) */
+        .offerte-column-container {
+            grid-column: 1;
+            grid-row: 1 / span 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Variazioni di colore per macro-fasi basate sul diagramma */
-        .step-commerciale { border-left: 4px solid #1e40af; }
-        .step-ordine { border-left: 4px solid #0284c7; }
-        .step-logistica { border-left: 4px solid #16a34a; }
-        .step-cliente { border-left: 4px solid #0d9488; }
+        .card-offerte { border-left: 4px solid #1d4ed8; width: 240px; }
 
-        .step-icon {
-            font-size: 28px;
+        /* Contenitore Row per affiancare Scontistiche e Campagne */
+        .sub-cards-row {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
         }
 
-        .step-title {
-            font-size: 13px;
+        /* Sottolabel con dimensioni speculari a Inserimento Cliente */
+        .card-scontistiche-sotto, .card-campagne-sotto {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 10px 12px;
+            width: 130px;
+            height: 75px;
+            text-align: center;
+            font-size: 11px;
             font-weight: 600;
             color: #334155;
-            line-height: 1.3;
-        }
-
-        /* Sezione Destra: Colonne Verticali (Aree di Concentrazione ed ERP) */
-        .side-column {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-sizing: border-box;
+            border-top: 3px solid #cbd5e1;
         }
 
-        .macro-box {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            border-left: 6px solid #0284c7;
+        .card-scontistiche-sotto { border-top-color: #eab308; }
+        .card-campagne-sotto { border-top-color: #db2777; }
+
+        .card-gestione-ordine { border-left: 4px solid #0284c7; }
+        .card-conferma { border-left: 4px solid #1d4ed8; }
+        .card-logistica { border-left: 4px solid #16a34a; }
+        .card-tracking { border-left: 4px solid #16a34a; width: 160px; }
+
+        .sub-badge-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+        }
+        .sub-badge {
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #0284c7;
+            background: #f8fafc;
         }
 
-        .macro-box.central-erp {
-            border-left-color: #1e3a8a;
-            background: radial-gradient(circle at center, #ffffff 60%, #eff6ff 100%);
+        .flow-card-icon { font-size: 24px; }
+
+        /* --- Posizionamento del Ramo Verticale per il Tracking (Sotto colonna 5) --- */
+        .vertical-arrow {
+            grid-column: 5;
+            grid-row: 2;
+            align-self: start;
             text-align: center;
+            color: #a21caf;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
         }
 
-        .macro-title {
-            color: #1e3a8a;
+        .tracking-container {
+            grid-column: 5;
+            grid-row: 2;
+            align-self: start;
+            margin-top: 55px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- Customer Service Bottom Line --- */
+        .footer-customer-service {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #0d9488;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             font-size: 16px;
             font-weight: bold;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Liste di link/funzioni */
-        .links-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .links-list button {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            color: #334155;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            text-align: left;
+            color: #0f766e;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             width: 100%;
-            transition: all 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+            margin-top: 40px;
         }
 
-        .links-list button:hover {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            border-color: #bae6fd;
-            transform: translateX(3px);
-        }
-
-        .erp-badge {
-            background: #1e3a8a;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.2);
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .dashboard-container {
-                grid-template-columns: 1fr;
-            }
+        /* Effetti al passaggio del mouse */
+        .flow-card:hover, .input-card:hover, .card-scontistiche-sotto:hover, .card-campagne-sotto:hover, .footer-customer-service:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            border-color: #3b82f6;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
     </style>
 </head>
 <body>
 
-    <h1>
-        Workflow Aziendale e Strategia Trasformazione ERP
-        <span class="subtitle">Order-to-Cash: Commerciale → Ordine → Logistica → Cliente</span>
-    </h1>
+    <div class="workflow-container">
 
-    <div class="dashboard-container">
-        
-        <div class="main-flow-section">
-            <div class="section-title">🔄 Flusso dei Processi Operativi</div>
-            
-            <div class="process-timeline">
-                
-                <div class="process-step step-commerciale" onclick="inviaMessaggioNavigazione('/order-to-cash/offerte')">
-                    <span class="step-icon">📄</span>
-                    <span class="step-title">Generazione Offerte<br><small style="color:#64748b;">(CRM o ERP)</small></span>
-                </div>
+        <svg class="svg-connections">
+            <path d="M 75,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
+            <path d="M 235,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
+        </svg>
 
-                <div class="process-step step-commerciale" onclick="inviaMessaggioNavigazione('/order-to-cash/campagne')">
-                    <span class="step-icon">📢</span>
-                    <span class="step-title">Gestione Campagne / Promozioni</span>
-                </div>
-
-                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-cliente')">
-                    <span class="step-icon">👤</span>
-                    <span class="step-title">Inserimento Cliente</span>
-                </div>
-
-                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-ordine')">
-                    <span class="step-icon">🛒</span>
-                    <span class="step-title">Inserimento Ordine</span>
-                </div>
-
-                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/scontistiche')">
-                    <span class="step-icon">🤝</span>
-                    <span class="step-title">Gestione Scontistiche e Provvigioni</span>
-                </div>
-
-                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/conferma-ordine')">
-                    <span class="step-icon">✅</span>
-                    <span class="step-title">Conferma Ordine</span>
-                </div>
-
-                <div class="process-step step-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/passaggio-wms')">
-                    <span class="step-icon">🚜</span>
-                    <span class="step-title">Passaggio a Logistica / WMS</span>
-                </div>
-
-                <div class="process-step step-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/spedizione')">
-                    <span class="step-icon">📦</span>
-                    <span class="step-title">Preparazione Spedizione</span>
-                </div>
-
-                <div class="process-step step-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/tracking')">
-                    <span class="step-icon">🚚</span>
-                    <span class="step-title">Tracking Consegna</span>
-                </div>
-
-                <div class="process-step step-cliente" onclick="inviaMessaggioNavigazione('/order-to-cash/fatturazione')">
-                    <span class="step-icon">🧾</span>
-                    <span class="step-title">Fatturazione</span>
-                </div>
-
-                <div class="process-step step-cliente" onclick="inviaMessaggioNavigazione('/order-to-cash/customer-service')">
-                    <span class="step-icon">🎧</span>
-                    <span class="step-title">Customer Service e Reclami</span>
-                </div>
-
+        <div class="top-inputs">
+            <div class="input-card" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-cliente')">
+                <span class="input-icon" style="color: #6b21a8;">👤</span>
+                <span>Inserimento Cliente</span>
+            </div>
+            <div class="input-card provvigioni" onclick="inviaMessaggioNavigazione('/order-to-cash/provvigioni')">
+                <span class="input-icon" style="color: #eab308;">💰</span>
+                <span>Gestione Provvigioni</span>
             </div>
         </div>
 
-        <div class="side-column">
+        <div class="grid-flow-layout">
             
-            <div class="macro-box central-erp">
-                <div class="erp-badge">ERP CENTRALIZZATO</div>
-                <div class="macro-title" style="justify-content: center; font-size: 13px; color: #475569;">Integrazione Dati Core</div>
-                <ul class="links-list">
-                    <li><button onclick="inviaMessaggioNavigazione('/erp/anagrafica-unificata')">✨ Anagrafica Cliente Unificata</button></li>
-                    <li><button onclick="inviaMessaggioNavigazione('/erp/sincronizzazione-wms')">🔄 Sincronizzazione WMS & ERP</button></li>
-                    <li><button onclick="inviaMessaggioNavigazione('/erp/calcolo-dinamico')">🧮 Calcolo Dinamico Sconti</button></li>
-                </ul>
+            <div class="offerte-column-container">
+                <div class="flow-card card-offerte" onclick="inviaMessaggioNavigazione('/order-to-cash/offerte')">
+                    <span class="flow-card-icon" style="color: #94a3b8;">📄</span>
+                    <span>Offerte</span>
+                    <div class="sub-badge-container">
+                        <div class="sub-badge">🌐 Web</div>
+                        <div class="sub-badge">💻 ERP</div>
+                    </div>
+                </div>
+                
+                <div class="vertical-arrow-purple">⬇</div>
+                
+                <div class="sub-cards-row">
+                    <div class="card-scontistiche-sotto" onclick="inviaMessaggioNavigazione('/order-to-cash/scontistiche')">
+                        <span style="font-size: 18px; color: #eab308;">🤝</span>
+                        <span>Gestione Scontistiche</span>
+                    </div>
+                    
+                    <div class="card-campagne-sotto" onclick="inviaMessaggioNavigazione('/order-to-cash/campagne')">
+                        <span style="font-size: 18px; color: #db2777;">📢</span>
+                        <span>Gestione Campagne / Promozioni</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="macro-box">
-                <div class="macro-title">🎯 Obiettivi di Trasformazione</div>
-                <ul class="links-list">
-                    <li><button onclick="inviaMessaggioNavigazione('/strategia/automazione-crm')">🤖 Automazione CRM/ERP</button></li>
-                    <li><button onclick="inviaMessaggioNavigazione('/strategia/portale-ordini')">🌐 Portale Ordini B2B/B2C</button></li>
-                    <li><button onclick="inviaMessaggioNavigazione('/strategia/ottimizzazione-percorsi')">📍 Ottimizzazione Percorsi Spedizione</button></li>
-                    <li><button onclick="inviaMessaggioNavigazione('/strategia/fatturazione-elettronica')">⚡ Fatturazione Elettronica Aut.</button></li>
-                </ul>
+            <div class="arrow-connector">➔</div>
+
+            <div class="flow-card card-gestione-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-ordine')">
+                <span class="flow-card-icon" style="color: #64748b;">🛒</span>
+                <span>Gestione Ordine</span>
             </div>
 
-            <div class="macro-box" style="border-left-color: #10b981;">
-                <div class="macro-title" style="color: #0f766e;">📈 Impatto e Valore</div>
-                <ul class="links-list">
-                    <li><button onclick="inviaMessaggioNavigazione('/valore/miglior-servizio')">⭐ Migliore Livello di Servizio</button></li>
-                    <li><button onclick="inviaMessaggioNavigazione('/valore/efficienza-operativa')">⚙️ Efficienza Operativa</button></li>
-                    <li><button onclick="inviaMessaggioNavigazione('/valore/decisioni-strategiche')">📊 Dati per Decisioni Strategiche</button></li>
-                </ul>
+            <div class="arrow-connector">➔</div>
+
+            <div class="flow-card card-conferma" onclick="inviaMessaggioNavigazione('/order-to-cash/conferma-ordine')">
+                <span class="flow-card-icon" style="color: #22c55e;">✅</span>
+                <span>Conferma Ordine</span>
             </div>
 
+            <div class="arrow-connector">➔</div>
+
+            <div class="flow-card card-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/passaggio-wms')">
+                <span class="flow-card-icon" style="color: #16a34a;">🚜</span>
+                <span>Passaggio a Logistica / WMS</span>
+            </div>
+
+            <div class="vertical-arrow">⬇</div>
+            
+            <div class="tracking-container">
+                <div class="flow-card card-tracking" onclick="inviaMessaggioNavigazione('/order-to-cash/tracking')">
+                    <span class="flow-card-icon" style="color: #f97316;">🚚</span>
+                    <span>Tracking Consegna</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-customer-service" onclick="inviaMessaggioNavigazione('/order-to-cash/customer-service')">
+            <span class="flow-card-icon" style="color: #0f766e;">🎧</span>
+            <span>Customer Service e Reclami</span>
         </div>
 
     </div>
 
     <script>
     function inviaMessaggioNavigazione(percorsoTarget) {
-        let routePath = percorsoTarget;
-        if (percorsoTarget.includes('#')) {
-            routePath = percorsoTarget.split('#')[1];
-        }
-
         const payload = {
             type: 'ROUTER_NAVIGATION',
             action: 'navigate',
             url: percorsoTarget,
-            route: routePath
+            route: percorsoTarget
         };
-
-        console.log("Invio comando via postMessage per la fase: " + percorsoTarget);
-
+        console.log("Navigazione verso: " + percorsoTarget);
         try {
             window.parent.postMessage(payload, '*');
-            window.parent.postMessage(JSON.stringify(payload), '*');
-            console.log("Messaggio inviato correttamente al sistema ERP.");
         } catch (e) {
-            console.error("Errore durante l'esecuzione del postMessage:", e);
+            console.error("Errore postMessage:", e);
         }
     }
     </script>
