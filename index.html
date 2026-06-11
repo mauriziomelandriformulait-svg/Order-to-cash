@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflow Aziendale - Strategia Trasformazione ERP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Titolo principale aggiornato con i colori dell'immagine */
+        h1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-align: center;
+            color: #1e3a8a; /* Blu scuro principale */
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3b82f6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        h1 span.subtitle {
+            font-size: 18px;
+            color: #0284c7; /* Celeste Order-to-Cash */
+            font-weight: 600;
+        }
+
+        /* Container Principale a Griglia */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 25px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Sezione Sinistra: Flusso Lineare Order-to-Cash */
+        .main-flow-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border-top: 6px solid #1d4ed8;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Timeline / Processo Sequenziale */
+        .process-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 15px;
+        }
+
+        /* Singolo Step del Processo */
+        .process-step {
+            flex: 1;
+            min-width: 140px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .process-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border-color: #3b82f6;
+            background: #f0fdf4;
+        }
+
+        /* Variazioni di colore per macro-fasi basate sul diagramma */
+        .step-commerciale { border-left: 4px solid #1e40af; }
+        .step-ordine { border-left: 4px solid #0284c7; }
+        .step-logistica { border-left: 4px solid #16a34a; }
+        .step-cliente { border-left: 4px solid #0d9488; }
+
+        .step-icon {
+            font-size: 28px;
+        }
+
+        .step-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            line-height: 1.3;
+        }
+
+        /* Sezione Destra: Colonne Verticali (Aree di Concentrazione ed ERP) */
+        .side-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .macro-box {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border-left: 6px solid #0284c7;
+        }
+
+        .macro-box.central-erp {
+            border-left-color: #1e3a8a;
+            background: radial-gradient(circle at center, #ffffff 60%, #eff6ff 100%);
+            text-align: center;
+        }
+
+        .macro-title {
+            color: #1e3a8a;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Liste di link/funzioni */
+        .links-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .links-list button {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .links-list button:hover {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            border-color: #bae6fd;
+            transform: translateX(3px);
+        }
+
+        .erp-badge {
+            background: #1e3a8a;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>
+        Workflow Aziendale e Strategia Trasformazione ERP
+        <span class="subtitle">Order-to-Cash: Commerciale → Ordine → Logistica → Cliente</span>
+    </h1>
+
+    <div class="dashboard-container">
+        
+        <div class="main-flow-section">
+            <div class="section-title">🔄 Flusso dei Processi Operativi</div>
+            
+            <div class="process-timeline">
+                
+                <div class="process-step step-commerciale" onclick="inviaMessaggioNavigazione('/order-to-cash/offerte')">
+                    <span class="step-icon">📄</span>
+                    <span class="step-title">Generazione Offerte<br><small style="color:#64748b;">(CRM o ERP)</small></span>
+                </div>
+
+                <div class="process-step step-commerciale" onclick="inviaMessaggioNavigazione('/order-to-cash/campagne')">
+                    <span class="step-icon">📢</span>
+                    <span class="step-title">Gestione Campagne / Promozioni</span>
+                </div>
+
+                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-cliente')">
+                    <span class="step-icon">👤</span>
+                    <span class="step-title">Inserimento Cliente</span>
+                </div>
+
+                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-ordine')">
+                    <span class="step-icon">🛒</span>
+                    <span class="step-title">Inserimento Ordine</span>
+                </div>
+
+                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/scontistiche')">
+                    <span class="step-icon">🤝</span>
+                    <span class="step-title">Gestione Scontistiche e Provvigioni</span>
+                </div>
+
+                <div class="process-step step-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/conferma-ordine')">
+                    <span class="step-icon">✅</span>
+                    <span class="step-title">Conferma Ordine</span>
+                </div>
+
+                <div class="process-step step-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/passaggio-wms')">
+                    <span class="step-icon">🚜</span>
+                    <span class="step-title">Passaggio a Logistica / WMS</span>
+                </div>
+
+                <div class="process-step step-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/spedizione')">
+                    <span class="step-icon">📦</span>
+                    <span class="step-title">Preparazione Spedizione</span>
+                </div>
+
+                <div class="process-step step-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/tracking')">
+                    <span class="step-icon">🚚</span>
+                    <span class="step-title">Tracking Consegna</span>
+                </div>
+
+                <div class="process-step step-cliente" onclick="inviaMessaggioNavigazione('/order-to-cash/fatturazione')">
+                    <span class="step-icon">🧾</span>
+                    <span class="step-title">Fatturazione</span>
+                </div>
+
+                <div class="process-step step-cliente" onclick="inviaMessaggioNavigazione('/order-to-cash/customer-service')">
+                    <span class="step-icon">🎧</span>
+                    <span class="step-title">Customer Service e Reclami</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="side-column">
+            
+            <div class="macro-box central-erp">
+                <div class="erp-badge">ERP CENTRALIZZATO</div>
+                <div class="macro-title" style="justify-content: center; font-size: 13px; color: #475569;">Integrazione Dati Core</div>
+                <ul class="links-list">
+                    <li><button onclick="inviaMessaggioNavigazione('/erp/anagrafica-unificata')">✨ Anagrafica Cliente Unificata</button></li>
+                    <li><button onclick="inviaMessaggioNavigazione('/erp/sincronizzazione-wms')">🔄 Sincronizzazione WMS & ERP</button></li>
+                    <li><button onclick="inviaMessaggioNavigazione('/erp/calcolo-dinamico')">🧮 Calcolo Dinamico Sconti</button></li>
+                </ul>
+            </div>
+
+            <div class="macro-box">
+                <div class="macro-title">🎯 Obiettivi di Trasformazione</div>
+                <ul class="links-list">
+                    <li><button onclick="inviaMessaggioNavigazione('/strategia/automazione-crm')">🤖 Automazione CRM/ERP</button></li>
+                    <li><button onclick="inviaMessaggioNavigazione('/strategia/portale-ordini')">🌐 Portale Ordini B2B/B2C</button></li>
+                    <li><button onclick="inviaMessaggioNavigazione('/strategia/ottimizzazione-percorsi')">📍 Ottimizzazione Percorsi Spedizione</button></li>
+                    <li><button onclick="inviaMessaggioNavigazione('/strategia/fatturazione-elettronica')">⚡ Fatturazione Elettronica Aut.</button></li>
+                </ul>
+            </div>
+
+            <div class="macro-box" style="border-left-color: #10b981;">
+                <div class="macro-title" style="color: #0f766e;">📈 Impatto e Valore</div>
+                <ul class="links-list">
+                    <li><button onclick="inviaMessaggioNavigazione('/valore/miglior-servizio')">⭐ Migliore Livello di Servizio</button></li>
+                    <li><button onclick="inviaMessaggioNavigazione('/valore/efficienza-operativa')">⚙️ Efficienza Operativa</button></li>
+                    <li><button onclick="inviaMessaggioNavigazione('/valore/decisioni-strategiche')">📊 Dati per Decisioni Strategiche</button></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+    function inviaMessaggioNavigazione(percorsoTarget) {
+        let routePath = percorsoTarget;
+        if (percorsoTarget.includes('#')) {
+            routePath = percorsoTarget.split('#')[1];
+        }
+
+        const payload = {
+            type: 'ROUTER_NAVIGATION',
+            action: 'navigate',
+            url: percorsoTarget,
+            route: routePath
+        };
+
+        console.log("Invio comando via postMessage per la fase: " + percorsoTarget);
+
+        try {
+            window.parent.postMessage(payload, '*');
+            window.parent.postMessage(JSON.stringify(payload), '*');
+            console.log("Messaggio inviato correttamente al sistema ERP.");
+        } catch (e) {
+            console.error("Errore durante l'esecuzione del postMessage:", e);
+        }
+    }
+    </script>
+
+</body>
+</html>
