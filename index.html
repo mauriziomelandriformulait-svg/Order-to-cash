@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Workflow Order-to-Cash</title>
     <style>
-        /* Applicato rimpicciolimento globale del 17% (scala a 0.83) */
+        /* Applicato rimpicciolimento globale modificato: da -17% (0.83) a -10% (0.90) per un aumento netto del 7% */
         html {
             overflow-x: hidden; /* Previene scrollbar orizzontali dovute alla scalatura */
         }
@@ -19,7 +19,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transform: scale(0.83); /* Scala ridotta del 17% */
+            transform: scale(0.90); /* Dimensione aumentata del 7% rispetto a prima */
             transform-origin: top center; /* Mantiene la pagina centrata e ancorata in alto */
             width: 100%;
         }
@@ -268,6 +268,8 @@
             padding: 15px;
             box-sizing: border-box;
             width: 250px;
+            align-self: start; /* Forza l'ancoraggio all'inizio verticale della griglia */
+            margin-top: -15px; /* Sposta ulteriormente il pannello verso l'alto */
         }
 
         /* Trasformato in tag link per PowerBI */
