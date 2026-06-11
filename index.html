@@ -5,15 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Workflow Order-to-Cash</title>
     <style>
+        /* Applicato rimpicciolimento globale del 17% (scala a 0.83) */
+        html {
+            overflow-x: hidden; /* Previene scrollbar orizzontali dovute alla scalatura */
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
             color: #1e293b;
             margin: 0;
-            padding: 40px;
+            padding: 40px 0; /* Padding verticale bilanciato */
             display: flex;
             flex-direction: column;
             align-items: center;
+            transform: scale(0.83); /* Scala ridotta del 17% */
+            transform-origin: top center; /* Mantiene la pagina centrata e ancorata in alto */
+            width: 100%;
         }
 
         .workflow-container {
@@ -211,8 +219,17 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            color: #0284c7;
             background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+        
+        /* Colori e Hover specifici per i Badge Web ed ERP */
+        .badge-web { color: #0284c7; }
+        .badge-erp { color: #475569; }
+        .sub-badge:hover {
+            background: #e2e8f0;
+            border-color: #3b82f6;
+            cursor: pointer;
         }
 
         .flow-card-icon { font-size: 24px; }
@@ -238,7 +255,7 @@
             justify-content: center;
         }
 
-        /* --- SEZIONE POWER BI (Modificata con label allargate e icone al centro in basso) --- */
+        /* --- SEZIONE POWER BI --- */
         .powerbi-side-panel {
             grid-column: 8;
             grid-row: 1 / span 2;
@@ -250,32 +267,34 @@
             border-radius: 8px;
             padding: 15px;
             box-sizing: border-box;
-            width: 250px; /* Larghezza definita del pannello laterale */
+            width: 250px;
         }
 
+        /* Trasformato in tag link per PowerBI */
         .powerbi-label {
             background: white;
             border: 1px solid #e2e8f0;
-            border-left: 4px solid #f2c811; /* Giallo Power BI */
+            border-left: 4px solid #f2c811;
             border-radius: 6px;
             padding: 15px;
             font-size: 13px;
             font-weight: 600;
             color: #1e293b;
             display: flex;
-            flex-direction: column; /* Cambiato in colonna per posizionare l'icona sotto */
-            align-items: center;    /* Centra gli elementi orizzontalmente */
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             gap: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             box-sizing: border-box;
-            width: 100%;            /* Allarga la label a tutta larghezza rispetto al pannello */
+            width: 100%;
             text-align: center;
-            height: 110px;          /* Uniformata l'altezza con le altre card */
+            height: 110px;
+            text-decoration: none; /* Rimuove sottolineatura del link standard */
         }
 
         .powerbi-label-icon {
-            font-size: 24px;        /* Icona ingrandita e centrata sotto */
+            font-size: 24px;
         }
 
         /* --- Customer Service Bottom Line --- */
@@ -293,7 +312,7 @@
             font-weight: bold;
             color: #0f766e;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            width: calc(100% - 260px); /* Evita la sovrapposizione visiva con la colonna destra */
+            width: calc(100% - 260px);
             box-sizing: border-box;
             position: relative;
             z-index: 2;
@@ -320,12 +339,12 @@
         </svg>
 
         <div class="top-inputs">
-            <div class="input-card" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-cliente')">
+            <div class="input-card" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/subjectListAnid/1')">
                 <span class="input-icon" style="color: #6b21a8;">👤</span>
                 <span>Inserimento Cliente</span>
             </div>
             
-            <div class="input-card provvigioni" onclick="inviaMessaggioNavigazione('/order-to-cash/provvigioni')">
+            <div class="input-card provvigioni" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/OCPV/1')">
                 <span class="input-icon" style="color: #eab308;">💰</span>
                 <span>Gestione Provvigioni</span>
             </div>
@@ -339,24 +358,24 @@
         <div class="grid-flow-layout">
             
             <div class="offerte-column-container">
-                <div class="flow-card card-offerte" onclick="inviaMessaggioNavigazione('/order-to-cash/offerte')">
+                <div class="flow-card card-offerte">
                     <span class="flow-card-icon" style="color: #94a3b8;">📄</span>
                     <span>Offerte</span>
                     <div class="sub-badge-container">
-                        <div class="sub-badge">🌐 Web</div>
-                        <div class="sub-badge">💻 ERP</div>
+                        <div class="sub-badge badge-web" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">🌐 Web</div>
+                        <div class="sub-badge badge-erp" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">💻 ERP</div>
                     </div>
                 </div>
                 
                 <div class="vertical-arrow-purple">⬇</div>
                 
                 <div class="sub-cards-row">
-                    <div class="card-scontistiche-sotto" onclick="inviaMessaggioNavigazione('/order-to-cash/scontistiche')">
+                    <div class="card-scontistiche-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/discounts/1')">
                         <span style="font-size: 18px; color: #eab308;">🤝</span>
                         <span>Gestione Scontistiche</span>
                     </div>
                     
-                    <div class="card-campagne-sotto" onclick="inviaMessaggioNavigazione('/order-to-cash/campagne')">
+                    <div class="card-campagne-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salescampaigns/1')">
                         <span style="font-size: 18px; color: #db2777;">📢</span>
                         <span>Gestione Campagne / Promozioni</span>
                     </div>
@@ -365,21 +384,21 @@
 
             <div class="arrow-connector">➔</div>
 
-            <div class="flow-card card-gestione-ordine" onclick="inviaMessaggioNavigazione('/order-to-cash/inserimento-ordine')">
+            <div class="flow-card card-gestione-ordine" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
                 <span class="flow-card-icon" style="color: #64748b;">🛒</span>
                 <span>Gestione Ordine</span>
             </div>
 
             <div class="arrow-connector">➔</div>
 
-            <div class="flow-card card-conferma" onclick="inviaMessaggioNavigazione('/order-to-cash/conferma-ordine')">
+            <div class="flow-card card-conferma" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
                 <span class="flow-card-icon" style="color: #22c55e;">✅</span>
                 <span>Conferma Ordine</span>
             </div>
 
             <div class="arrow-connector">➔</div>
 
-            <div class="flow-card card-logistica" onclick="inviaMessaggioNavigazione('/order-to-cash/passaggio-wms')">
+            <div class="flow-card card-logistica" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/SHPS/1')">
                 <span class="flow-card-icon">🛺📦</span>
                 <span>Passaggio a WMS</span>
             </div>
@@ -396,20 +415,20 @@
             <div class="powerbi-side-panel">
                 <div style="font-size: 11px; font-weight: bold; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">Analytics Reports</div>
                 
-                <div class="powerbi-label" onclick="inviaMessaggioNavigazione('/analytics/overview-vendite')">
+                <a class="powerbi-label" href="https://app.powerbi.com/Redirect?action=OpenReport&appId=67590226-b26e-469d-829c-2df580e3f619&reportObjectId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a&reportPage=ReportSection218e52dd3a234d899a27&pbi_source=appShareLink&portalSessionId=99411bed-5f4a-4a91-8215-9b268c6a4313" target="_blank">
                     <span>Overview Vendite</span>
                     <span class="powerbi-label-icon">📊</span>
-                </div>
+                </a>
 
-                <div class="powerbi-label" onclick="inviaMessaggioNavigazione('/analytics/marginalita-promo-campagne')">
+                <a class="powerbi-label" href="https://app.powerbi.com/Redirect?action=OpenReport&appId=67590226-b26e-469d-829c-2df580e3f619&reportObjectId=078e3c94-bab0-4f18-b4c1-df0091bc9c96&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a&reportPage=ReportSection24c9791504ff3f5009db&pbi_source=appShareLink&portalSessionId=99411bed-5f4a-4a91-8215-9b268c6a4313" target="_blank">
                     <span>Marginalità Promo e Campagne</span>
                     <span class="powerbi-label-icon">📈</span>
-                </div>
+                </a>
 
-                <div class="powerbi-label" onclick="inviaMessaggioNavigazione('/analytics/branch-analysis')">
+                <a class="powerbi-label" href="https://app.powerbi.com/Redirect?action=OpenReport&appId=67590226-b26e-469d-829c-2df580e3f619&reportObjectId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a&reportPage=ReportSection493b7c660bd6732963c6&pbi_source=appShareLink&portalSessionId=99411bed-5f4a-4a91-8215-9b268c6a4313" target="_blank">
                     <span>Branch Analysis</span>
                     <span class="powerbi-label-icon">🌿</span>
-                </div>
+                </a>
             </div>
 
         </div>
@@ -423,17 +442,27 @@
 
     <script>
     function inviaMessaggioNavigazione(percorsoTarget) {
+        
+        let routePath = percorsoTarget;
+        if (percorsoTarget.includes('#')) {
+            routePath = percorsoTarget.split('#')[1];
+        }
+
         const payload = {
             type: 'ROUTER_NAVIGATION',
             action: 'navigate',
             url: percorsoTarget,
-            route: percorsoTarget
+            route: routePath
         };
-        console.log("Navigazione verso: " + percorsoTarget);
+
+        console.log("Invio comando via postMessage per il percorso: " + percorsoTarget);
+
         try {
             window.parent.postMessage(payload, '*');
+            window.parent.postMessage(JSON.stringify(payload), '*');
+            console.log("Messaggio inviato correttamente al sistema ERP.");
         } catch (e) {
-            console.error("Errore postMessage:", e);
+            console.error("Errore durante l'esecuzione del postMessage:", e);
         }
     }
     </script>
