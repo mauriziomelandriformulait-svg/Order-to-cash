@@ -33,6 +33,25 @@
             position: relative;
         }
 
+        /* Layout principale che avvicina i report di Analytics al flusso operativo */
+        .main-dashboard-content {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start; /* Spinge tutto a sinistra per eliminare i vuoti */
+            gap: 30px; /* Spazio controllato tra il flusso e i report */
+            width: 100%;
+        }
+
+        /* Dimensione definita per compattare l'area dei flussi e avvicinare la colonna Analytics */
+        .left-flow-side {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 950px; 
+            flex-shrink: 0;
+        }
+
         /* --- SVG per le Frecce di Collegamento Superiori --- */
         .svg-connections {
             position: absolute;
@@ -108,10 +127,7 @@
         /* --- Griglia Principale --- */
         .grid-flow-layout {
             display: grid;
-            grid-template-columns: 290px 40px 160px 40px 160px 40px 220px;
-            grid-template-rows: auto auto;
-            row-gap: 20px;
-            column-gap: 10px;
+            grid-template-columns: 290px 40px 160px 40px 160px 40px 160px;
             align-items: start; 
             position: relative;
             z-index: 2;
@@ -153,12 +169,12 @@
             font-weight: 600;
             color: #1e293b;
             box-sizing: border-box;
+            width: 100%;
         }
 
         /* Blocco Colonna 1 */
         .offerte-column-container {
             grid-column: 1;
-            grid-row: 1 / span 2;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -199,9 +215,19 @@
         .card-campagne-sotto { border-top-color: #db2777; }
 
         .card-gestione-ordine { border-left: 4px solid #0284c7; }
+        
+        /* Contenitore Verticale per bloccare il Tracking sotto la Conferma */
+        .conferma-tracking-stack {
+            grid-column: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
         .card-conferma { border-left: 4px solid #1d4ed8; }
         .card-logistica { border-left: 4px solid #16a34a; }
-        .card-tracking { border-left: 4px solid #16a34a; width: 160px; }
+        .card-tracking { border-left: 4px solid #16a34a; }
 
         .sub-badge-container {
             display: flex;
@@ -234,31 +260,18 @@
 
         .flow-card-icon { font-size: 24px; }
 
-        /* Tracking */
-        .vertical-arrow {
-            grid-column: 5;
-            grid-row: 2;
-            align-self: start;
-            text-align: center;
+        /* Nuova gestione freccia e tracking attaccati */
+        .vertical-arrow-inline {
             color: #a21caf;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
-            margin-top: 20px;
+            text-align: center;
+            margin: 8px 0;
+            user-select: none;
         }
 
-        .tracking-container {
-            grid-column: 5;
-            grid-row: 2;
-            align-self: start;
-            margin-top: 55px;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* --- SEZIONE POWER BI --- */
+        /* --- SEZIONE POWER BI ALLINEATA IN ALTO E AVVICINATA AL FLUSSO --- */
         .powerbi-side-panel {
-            grid-column: 8;
-            grid-row: 1 / span 2;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -268,8 +281,8 @@
             padding: 15px;
             box-sizing: border-box;
             width: 250px;
-            align-self: start; /* Forza l'ancoraggio all'inizio verticale della griglia */
-            margin-top: -15px; /* Sposta ulteriormente il pannello verso l'alto */
+            flex-shrink: 0;
+            margin-top: 2px; /* Allineamento con il bordo superiore delle card di input */
         }
 
         /* Trasformato in tag link per PowerBI */
@@ -292,7 +305,7 @@
             width: 100%;
             text-align: center;
             height: 110px;
-            text-decoration: none; /* Rimuove sottolineatura del link standard */
+            text-decoration: none;
         }
 
         .powerbi-label-icon {
@@ -312,83 +325,90 @@
 <body>
 
     <div class="workflow-container">
-
-        <svg class="svg-connections">
-            <path d="M 75,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
-            <path d="M 235,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
-        </svg>
-
-        <div class="top-inputs">
-            <div class="input-card" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/subjectListAnid/1')">
-                <span class="input-icon" style="color: #6b21a8;">👤</span>
-                <span>Inserimento Cliente</span>
-            </div>
+        
+        <div class="main-dashboard-content">
             
-            <div class="input-card provvigioni" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/OCPV/1')">
-                <span class="input-icon" style="color: #eab308;">💰</span>
-                <span>Gestione Provvigioni</span>
-            </div>
-
-            <div class="inline-title-block">
-                <h1>Dashboard Workflow Order-to-Cash</h1>
-                <p>Mappatura interattiva del ciclo attivo aziendale</p>
-            </div>
-        </div>
-
-        <div class="grid-flow-layout">
-            
-            <div class="offerte-column-container">
-                <div class="flow-card card-offerte">
-                    <span class="flow-card-icon" style="color: #94a3b8;">📄</span>
-                    <span>Offerte</span>
-                    <div class="sub-badge-container">
-                        <div class="sub-badge badge-web" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">🌐 Web</div>
-                        <div class="sub-badge badge-erp" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">💻 ERP</div>
-                    </div>
-                </div>
+            <div class="left-flow-side">
                 
-                <div class="vertical-arrow-purple">⬇</div>
-                
-                <div class="sub-cards-row">
-                    <div class="card-scontistiche-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/discounts/1')">
-                        <span style="font-size: 18px; color: #eab308;">🤝</span>
-                        <span>Gestione Scontistiche</span>
+                <div class="top-inputs">
+                    <svg class="svg-connections">
+                        <path d="M 75,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
+                        <path d="M 235,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
+                    </svg>
+
+                    <div class="input-card" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/subjectListAnid/1')">
+                        <span class="input-icon" style="color: #6b21a8;">👤</span>
+                        <span>Inserimento Cliente</span>
                     </div>
                     
-                    <div class="card-campagne-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salescampaigns/1')">
-                        <span style="font-size: 18px; color: #db2777;">📢</span>
-                        <span>Gestione Campagne / Promozioni</span>
+                    <div class="input-card provvigioni" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/OCPV/1')">
+                        <span class="input-icon" style="color: #eab308;">💰</span>
+                        <span>Gestione Provvigioni</span>
+                    </div>
+
+                    <div class="inline-title-block">
+                        <h1>Dashboard Workflow Order-to-Cash</h1>
+                        <p>Mappatura interattiva del ciclo attivo aziendale</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="arrow-connector">➔</div>
+                <div class="grid-flow-layout">
+                    
+                    <div class="offerte-column-container">
+                        <div class="flow-card card-offerte">
+                            <span class="flow-card-icon" style="color: #94a3b8;">📄</span>
+                            <span>Offerte</span>
+                            <div class="sub-badge-container">
+                                <div class="sub-badge badge-web" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">🌐 Web</div>
+                                <div class="sub-badge badge-erp" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">💻 ERP</div>
+                            </div>
+                        </div>
+                        
+                        <div class="vertical-arrow-purple">⬇</div>
+                        
+                        <div class="sub-cards-row">
+                            <div class="card-scontistiche-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/discounts/1')">
+                                <span style="font-size: 18px; color: #eab308;">🤝</span>
+                                <span>Gestione Scontistiche</span>
+                            </div>
+                            
+                            <div class="card-campagne-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salescampaigns/1')">
+                                <span style="font-size: 18px; color: #db2777;">📢</span>
+                                <span>Gestione Campagne / Promozioni</span>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="flow-card card-gestione-ordine" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
-                <span class="flow-card-icon" style="color: #64748b;">🛒</span>
-                <span>Gestione Ordine</span>
-            </div>
+                    <div class="arrow-connector">➔</div>
 
-            <div class="arrow-connector">➔</div>
+                    <div class="flow-card card-gestione-ordine" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
+                        <span class="flow-card-icon" style="color: #64748b;">🛒</span>
+                        <span>Gestione Ordine</span>
+                    </div>
 
-            <div class="flow-card card-conferma" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
-                <span class="flow-card-icon" style="color: #22c55e;">✅</span>
-                <span>Conferma Ordine</span>
-            </div>
+                    <div class="arrow-connector">➔</div>
 
-            <div class="arrow-connector">➔</div>
+                    <div class="conferma-tracking-stack">
+                        <div class="flow-card card-conferma" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
+                            <span class="flow-card-icon" style="color: #22c55e;">✅</span>
+                            <span>Conferma Ordine</span>
+                        </div>
+                        
+                        <div class="vertical-arrow-inline">⬇</div>
+                        
+                        <div class="flow-card card-tracking" onclick="inviaMessaggioNavigazione('/order-to-cash/tracking')">
+                            <span class="flow-card-icon" style="color: #f97316;">🚚</span>
+                            <span>Tracking Consegna</span>
+                        </div>
+                    </div>
 
-            <div class="flow-card card-logistica" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/SHPS/1')">
-                <span class="flow-card-icon">🛺📦</span>
-                <span>Passaggio a WMS</span>
-            </div>
+                    <div class="arrow-connector">➔</div>
 
-            <div class="vertical-arrow">⬇</div>
-            
-            <div class="tracking-container">
-                <div class="flow-card card-tracking" onclick="inviaMessaggioNavigazione('/order-to-cash/tracking')">
-                    <span class="flow-card-icon" style="color: #f97316;">🚚</span>
-                    <span>Tracking Consegna</span>
+                    <div class="flow-card card-logistica" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/SHPS/1')">
+                        <span class="flow-card-icon">🛺📦</span>
+                        <span>Passaggio a WMS</span>
+                    </div>
+
                 </div>
             </div>
 
