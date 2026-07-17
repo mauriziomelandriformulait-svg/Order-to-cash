@@ -6,161 +6,164 @@
     <title>Dashboard Workflow Order-to-Cash</title>
     <style>
         html { overflow-x: hidden; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; color: #1e293b; margin: 0; padding: 40px 0; display: flex; flex-direction: column; align-items: center; transform: scale(0.90); transform-origin: top center; width: 100%; }
-        .workflow-container { max-width: 1450px; width: 100%; display: flex; flex-direction: column; gap: 40px; position: relative; }
-        .main-dashboard-content { display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; gap: 30px; width: 100%; }
-        .left-flow-side { display: flex; flex-direction: column; gap: 40px; width: 950px; flex-shrink: 0; }
-        .svg-connections { position: absolute; top: 0; left: 0; width: 100%; height: 240px; pointer-events: none; z-index: 1; }
-        .top-inputs { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 30px; padding-left: 10px; position: relative; z-index: 2; height: 80px; width: 100%; }
-        .input-card { background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px 15px; width: 130px; height: 75px; text-align: center; font-size: 11px; font-weight: 600; color: #334155; box-shadow: 0 2px 4px rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-top: 3px solid #1d4ed8; box-sizing: border-box; }
-        .input-card.provvigioni { border-top-color: #eab308; }
-        .input-icon { font-size: 18px; }
-        .inline-title-block { display: flex; flex-direction: column; justify-content: center; margin-left: 20px; text-align: left; }
-        .inline-title-block h1 { font-size: 24px; color: #0f172a; margin: 0 0 4px 0; font-weight: 700; letter-spacing: -0.5px; }
-        .inline-title-block p { font-size: 13px; color: #64748b; margin: 0; font-weight: 400; }
-        .grid-flow-layout { display: grid; grid-template-columns: 290px 40px 160px 40px 160px 40px 160px; align-items: start; position: relative; z-index: 2; }
-        .arrow-connector { color: #a21caf; font-size: 24px; font-weight: bold; user-select: none; text-align: center; margin-top: 40px; }
-        .vertical-arrow-purple { color: #a21caf; font-size: 20px; font-weight: bold; text-align: center; margin: 5px 0; }
-        .flow-card { background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 20px; height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; font-size: 14px; font-weight: 600; color: #1e293b; box-sizing: border-box; width: 100%; }
-        .offerte-column-container { grid-column: 1; display: flex; flex-direction: column; align-items: center; }
-        .card-offerte { border-left: 4px solid #1d4ed8; width: 240px; }
-        .sub-cards-row { display: flex; flex-direction: row; gap: 15px; justify-content: center; width: 100%; }
-        .card-scontistiche-sotto, .card-campagne-sotto { background: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px 12px; width: 130px; height: 75px; text-align: center; font-size: 11px; font-weight: 600; color: #334155; box-shadow: 0 2px 4px rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; box-sizing: border-box; border-top: 3px solid #cbd5e1; }
-        .card-scontistiche-sotto { border-top-color: #eab308; }
-        .card-campagne-sotto { border-top-color: #db2777; }
-        .card-gestione-ordine { border-left: 4px solid #0284c7; }
-        .conferma-tracking-stack { grid-column: 5; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .card-conferma { border-left: 4px solid #1d4ed8; }
-        .card-logistica { border-left: 4px solid #16a34a; }
-        .card-tracking { border-left: 4px solid #16a34a; }
-        .sub-badge-container { display: flex; flex-direction: column; gap: 5px; width: 100%; }
-        .sub-badge { border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px; background: #f8fafc; }
-        .badge-web { color: #0284c7; }
-        .badge-erp { color: #475569; }
-        .flow-card-icon { font-size: 24px; }
-        .vertical-arrow-inline { color: #a21caf; font-size: 22px; font-weight: bold; text-align: center; margin: 8px 0; user-select: none; }
-        .powerbi-side-panel { display: flex; flex-direction: column; gap: 15px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box; width: 250px; flex-shrink: 0; margin-top: 2px; }
-        .powerbi-label { background: white; border: 1px solid #e2e8f0; border-left: 4px solid #f2c811; border-radius: 6px; padding: 15px; font-size: 13px; font-weight: 600; color: #1e293b; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); box-sizing: border-box; width: 100%; text-align: center; height: 110px; text-decoration: none; }
-        .powerbi-label-icon { font-size: 24px; }
-        .flow-card:hover, .input-card:hover, .card-scontistiche-sotto:hover, .card-campagne-sotto:hover, .powerbi-label:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.08); border-color: #3b82f6; cursor: pointer; transition: all 0.2s ease; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; color: #1e293b; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        a { text-decoration: none; color: inherit; }
         
-        /* Modale */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 30px; border-radius: 8px; width: 80%; max-width: 1000px; max-height: 80vh; overflow-y: auto; position: relative; }
-        .close-modal { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px; font-weight: bold; border: none; background: none; }
-        .workflow-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .workflow-table th { background: #f8fafc; padding: 12px; border: 1px solid #e2e8f0; font-size: 12px; }
-        .workflow-table td { padding: 10px; border: 1px solid #e2e8f0; text-align: center; font-size: 12px; }
+        /* Tasto Back */
+        .back-button { position: absolute; top: 20px; left: 20px; font-size: 32px; color: #FDB913; font-weight: bold; line-height: 1; transition: opacity 0.2s; }
+        .back-button:hover { opacity: 0.7; }
+
+        /* Modale Status - Stile pulito che non interferisce */
+        #status-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+        .status-table-container { background: white; padding: 25px; border-radius: 12px; max-width: 900px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #64748b; font-weight: bold; }
+        .close-btn:hover { color: #1e293b; }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 14px; }
+        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+        th { background-color: #f8fafc; }
+        .semaforo { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+
+        /* Stili Dashboard Originali */
+        .workflow-container { max-width: 1450px; width: 100%; display: flex; flex-direction: column; gap: 30px; }
+        .main-dashboard-content { display: flex; flex-direction: row; align-items: start; gap: 20px; width: 100%; justify-content: center; }
+        .grid-wrapper { display: flex; flex-direction: column; }
+        .otc-header-container { width: 100%; display: flex; justify-content: flex-start; margin-bottom: 10px; padding-left: 270px; }
+        .otc-title { width: 570px; text-align: left; font-size: 18px; font-weight: 500; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #FDB913; }
+        .input-card, .flow-card, .sub-card, .status-card, .powerbi-label, .sub-card-wide { 
+            box-shadow: none !important; font-weight: 700; border: 1px solid #cbd5e1;
+            border-bottom: 3px solid #FDB913 !important; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .column-container { display: flex; flex-direction: column; gap: 10px; align-items: center; height: 100%; }
+        .align-bottom { justify-content: flex-end; }
+        .input-block-container { display: flex; flex-direction: column; align-items: center; width: 170px; margin-bottom: 5px; }
+        .top-inputs-wrapper { display: flex; gap: 10px; align-items: center; justify-content: center; width: 100%; }
+        .card-icon { width: 16px; height: 16px; margin-right: 4px; }
+        .fan-arrows { display: flex; gap: 80px; color: #94a3b8; font-size: 20px; font-weight: bold; margin-top: 5px; }
+        .sub-fan-arrows { display: flex; gap: 40px; color: #94a3b8; font-size: 16px; font-weight: bold; margin-top: -5px; margin-bottom: -5px; }
+        .vertical-arrow { font-size: 20px; color: #94a3b8; font-weight: bold; margin: -5px 0; }
+        .input-card { background: white; border-radius: 6px; padding: 5px; width: 80px; height: 50px; text-align: center; font-size: 9px; }
+        .flow-card { background: white; border-radius: 8px; padding: 15px; width: 170px; height: 70px; gap: 5px; text-align: center; font-size: 12px; }
+        .sub-cards-row { display: flex; gap: 10px; }
+        .sub-card { background: white; border-radius: 6px; padding: 8px; width: 80px; height: 40px; text-align: center; font-size: 9px; }
+        .sub-card-wide { background: white; border-radius: 6px; padding: 8px; width: 170px; height: 40px; text-align: center; font-size: 12px; }
+        .status-card { background: white; border-radius: 6px; padding: 8px; width: 170px; height: 40px; text-align: center; font-size: 12px; }
+        .sub-badge-container { display: flex; gap: 6px; width: 100%; justify-content: center; margin-top: 5px; }
+        .sub-badge { border: 1px solid #cbd5e1; border-radius: 4px; padding: 2px 6px; font-size: 9px; background: #f8fafc; color: #475569; }
+        .grid-flow-layout { display: grid; grid-template-columns: auto 50px auto 50px auto 50px auto; align-items: start; justify-items: center; gap: 10px; }
+        .arrow-connector { display: flex; justify-content: center; align-items: center; align-self: center; height: 70px; }
+        .arrow-svg { stroke: #FDB913; stroke-width: 1.5; fill: none; width: 40px; }
+        .powerbi-side-panel { display: flex; flex-direction: column; gap: 15px; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 15px; width: 220px; border-radius: 8px; }
+        .powerbi-label { background: white; border-radius: 6px; padding: 12px; font-size: 12px; text-align: center; display: block; }
     </style>
 </head>
 <body>
 
+    <a href="javascript:history.back()" class="back-button" title="Torna indietro">&#8592;</a>
+
     <div class="workflow-container">
         <div class="main-dashboard-content">
-            <div class="left-flow-side">
-                <div class="top-inputs">
-                    <svg class="svg-connections">
-                        <path d="M 75,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
-                        <path d="M 235,75 L 145,175" stroke="#0e7490" stroke-width="2" fill="none" />
-                    </svg>
-                    <div class="input-card" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/subjectListAnid/1')">
-                        <span class="input-icon" style="color: #6b21a8;">👤</span>
-                        <span>Inserimento Cliente</span>
-                    </div>
-                    <div class="input-card provvigioni" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/OCPV/1')">
-                        <span class="input-icon" style="color: #eab308;">💰</span>
-                        <span>Gestione Provvigioni</span>
-                    </div>
-                    <div class="inline-title-block">
-                        <h1>Dashboard Workflow Order-to-Cash</h1>
-                        <p>Mappatura interattiva del ciclo attivo aziendale</p>
-                    </div>
+            <div class="grid-wrapper">
+                <div class="otc-header-container">
+                    <div class="otc-title">Order-to-Cash</div>
                 </div>
-
+                
                 <div class="grid-flow-layout">
-                    <div class="offerte-column-container">
-                        <div class="flow-card card-offerte">
-                            <span class="flow-card-icon" style="color: #94a3b8;">📄</span>
-                            <span>Offerte</span>
-                            <div class="sub-badge-container">
-                                <div class="sub-badge badge-web" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">🌐 Web</div>
-                                <div class="sub-badge badge-erp" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">💻 ERP</div>
+                    <!-- Contenuto dashboard originale integro -->
+                    <div class="column-container">
+                        <div class="input-block-container">
+                            <div class="top-inputs-wrapper">
+                                <a href="#" class="input-card">Inserimento Cliente</a>
+                                <a href="#" class="input-card">Gestione Provvigioni</a>
                             </div>
+                            <div class="fan-arrows"><span>↖</span><span>↗</span></div>
                         </div>
-                        <div class="vertical-arrow-purple">⬇</div>
+                        <a href="#" class="flow-card">Offerte <div class="sub-badge-container"><div class="sub-badge">Web</div><div class="sub-badge">ERP</div></div></a>
+                        <div class="sub-fan-arrows"><span>↙</span><span>↘</span></div>
                         <div class="sub-cards-row">
-                            <div class="card-scontistiche-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/discounts/1')">
-                                <span style="font-size: 18px; color: #eab308;">🤝</span>
-                                <span>Gestione Scontistiche</span>
-                            </div>
-                            <div class="card-campagne-sotto" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salescampaigns/1')">
-                                <span style="font-size: 18px; color: #db2777;">📢</span>
-                                <span>Gestione Campagne / Promozioni</span>
-                            </div>
+                            <a href="#" class="sub-card">Scontistiche</a>
+                            <a href="#" class="sub-card">Campagne</a>
                         </div>
                     </div>
-                    <div class="arrow-connector">➔</div>
-                    <div class="flow-card card-gestione-ordine" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
-                        <span class="flow-card-icon" style="color: #64748b;">🛒</span>
-                        <span>Gestione Ordine</span>
+                    
+                    <div class="arrow-connector"><svg viewBox="0 0 40 10" class="arrow-svg"><line x1="0" y1="5" x2="35" y2="5"/><polygon points="35,5 30,2 30,8" fill="#FDB913"/></svg></div>
+                    
+                    <div class="column-container align-bottom">
+                        <a href="#" class="flow-card">Gestione Ordine</a>
+                        <div class="vertical-arrow">↓</div>
+                        <div class="sub-card-wide">Order Tools</div>
                     </div>
-                    <div class="arrow-connector">➔</div>
-                    <div class="conferma-tracking-stack">
-                        <div class="flow-card card-conferma" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1')">
-                            <span class="flow-card-icon" style="color: #22c55e;">✅</span>
-                            <span>Conferma Ordine</span>
-                        </div>
-                        <div class="vertical-arrow-inline">⬇</div>
-                        <div class="flow-card card-tracking" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dwa_oc_sh_fa/1')">
-                            <span class="flow-card-icon" style="color: #f97316;">🚚</span>
-                            <span>Tracking</span>
-                        </div>
+                    
+                    <div class="arrow-connector"><svg viewBox="0 0 40 10" class="arrow-svg"><line x1="0" y1="5" x2="35" y2="5"/><polygon points="35,5 30,2 30,8" fill="#FDB913"/></svg></div>
+                    
+                    <div class="column-container align-bottom">
+                        <a href="#" class="flow-card">Conferma Ordine</a>
+                        <div class="vertical-arrow">↓</div>
+                        <a href="#" class="sub-card-wide">Tracking</a>
                     </div>
-                    <div class="arrow-connector">➔</div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <div class="flow-card card-logistica" onclick="inviaMessaggioNavigazione('https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/SHPS/1')">
-                            <span class="flow-card-icon">🛺📦</span>
-                            <span>Passaggio a WMS</span>
-                        </div>
-                        <div class="vertical-arrow-purple">⬇</div>
-                        <div class="flow-card" style="border-left: 4px solid #6366f1;" onclick="document.getElementById('workflowModal').style.display='flex'">
-                            <span class="flow-card-icon">📋</span>
-                            <span>Order Workflow Status</span>
-                        </div>
+                    
+                    <div class="arrow-connector"><svg viewBox="0 0 40 10" class="arrow-svg"><line x1="0" y1="5" x2="35" y2="5"/><polygon points="35,5 30,2 30,8" fill="#FDB913"/></svg></div>
+                    
+                    <div class="column-container align-bottom">
+                        <a href="#" class="flow-card">Passaggio a WMS</a>
+                        <div class="vertical-arrow">↓</div>
+                        <div class="status-card" onclick="apriStatus()">Status</div>
                     </div>
                 </div>
             </div>
 
             <div class="powerbi-side-panel">
-                <div style="font-size: 11px; font-weight: bold; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">Analytics Reports</div>
-                <a class="powerbi-label" href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a" target="_blank"><span>Overview Vendite</span><span class="powerbi-label-icon">📊</span></a>
-                <a class="powerbi-label" href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a" target="_blank"><span>Marginalità</span><span class="powerbi-label-icon">📈</span></a>
-                <a class="powerbi-label" href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a" target="_blank"><span>Sales Channel Analysis</span><span class="powerbi-label-icon">🌿</span></a>
+                <div style="font-size: 10px; font-weight: bold; color: #64748b; text-align: center; margin-bottom: 5px;">ANALYTICS REPORTS</div>
+                <a class="powerbi-label" href="#">📊 Overview Vendite</a>
+                <a class="powerbi-label" href="#">📈 Marginalità</a>
+                <a class="powerbi-label" href="#">🌿 Sales Channel</a>
             </div>
         </div>
     </div>
 
-    <div id="workflowModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal" onclick="document.getElementById('workflowModal').style.display='none'">×</button>
-            <h2>Order Workflow Status</h2>
-            <table class="workflow-table">
+    <!-- Modale Status -->
+    <div id="status-overlay" onclick="chiudiStatus()">
+        <div class="status-table-container" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="chiudiStatus()">&times;</span>
+            <h2>Stato Preparazione Ordini</h2>
+            <table id="status-table">
                 <thead>
-                    <tr><th>ID Ordine</th><th>Cliente</th><th>Stato Conf.</th><th>Stato WMS</th><th>Data Sped.</th></tr>
+                    <tr><th>N° Ordine</th><th>Cliente</th><th>Data Consegna</th><th>Da Prep.</th><th>Preparati</th><th>Stato</th></tr>
                 </thead>
-                <tbody>
-                    <tr><td>#ORD-001</td><td>Cliente A</td><td>✅</td><td>✅</td><td>15/06/2026</td></tr>
-                    <tr><td>#ORD-002</td><td>Cliente B</td><td>✅</td><td>⏳ In corso</td><td>-</td></tr>
-                </tbody>
+                <tbody id="table-body"></tbody>
             </table>
         </div>
     </div>
 
     <script>
-        function inviaMessaggioNavigazione(percorsoTarget) {
-            let routePath = percorsoTarget.includes('#') ? percorsoTarget.split('#')[1] : percorsoTarget;
-            const payload = { type: 'ROUTER_NAVIGATION', action: 'navigate', url: percorsoTarget, route: routePath };
-            window.parent.postMessage(payload, '*');
+        const ordini = [
+            {n: "ORD001", cli: "Rossi Srl", data: "20/07/2026", tot: 10, prep: 10, col: "#22c55e"},
+            {n: "ORD002", cli: "Bianchi Spa", data: "21/07/2026", tot: 50, prep: 45, col: "#f59e0b"},
+            {n: "ORD003", cli: "Verdi Srl", data: "22/07/2026", tot: 20, prep: 0, col: "#ef4444"},
+            {n: "ORD004", cli: "Neri Srl", data: "23/07/2026", tot: 30, prep: 30, col: "#22c55e"},
+            {n: "ORD005", cli: "Blu Spa", data: "24/07/2026", tot: 15, prep: 5, col: "#f59e0b"},
+            {n: "ORD006", cli: "Gialli Srl", data: "25/07/2026", tot: 100, prep: 100, col: "#22c55e"},
+            {n: "ORD007", cli: "Viola Srl", data: "26/07/2026", tot: 40, prep: 10, col: "#ef4444"},
+            {n: "ORD008", cli: "Arancio Spa", data: "27/07/2026", tot: 12, prep: 12, col: "#22c55e"},
+            {n: "ORD009", cli: "Grigio Srl", data: "28/07/2026", tot: 25, prep: 20, col: "#f59e0b"},
+            {n: "ORD010", cli: "Rosa Srl", data: "29/07/2026", tot: 60, prep: 0, col: "#ef4444"},
+            {n: "ORD011", cli: "Marrone Srl", data: "30/07/2026", tot: 80, prep: 40, col: "#f59e0b"}
+        ];
+
+        function apriStatus() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = "";
+            ordini.forEach(o => {
+                tbody.innerHTML += `<tr>
+                    <td>${o.n}</td><td>${o.cli}</td><td>${o.data}</td>
+                    <td>${o.tot}</td><td>${o.prep}</td>
+                    <td><div class="semaforo" style="background:${o.col}"></div></td>
+                </tr>`;
+            });
+            document.getElementById('status-overlay').style.display = 'flex';
+        }
+
+        function chiudiStatus() {
+            document.getElementById('status-overlay').style.display = 'none';
         }
     </script>
 </body>
