@@ -8,160 +8,106 @@
         html { overflow-x: hidden; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; color: #1e293b; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; width: 100%; }
         a { text-decoration: none; color: inherit; }
-        
-        /* Tasto Back */
-        .back-button { position: absolute; top: 20px; left: 20px; font-size: 32px; color: #FDB913; font-weight: bold; line-height: 1; transition: opacity 0.2s; }
-        .back-button:hover { opacity: 0.7; }
-
-        /* Stile Modale Status */
-        #status-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
-        .status-table-container { background: white; padding: 25px; border-radius: 12px; max-width: 900px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
-        th { background-color: #f8fafc; color: #475569; }
-        .semaforo { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
-
-        /* Stili Dashboard originali */
         .workflow-container { max-width: 1450px; width: 100%; display: flex; flex-direction: column; gap: 30px; }
         .main-dashboard-content { display: flex; flex-direction: row; align-items: start; gap: 20px; width: 100%; justify-content: center; }
         .grid-wrapper { display: flex; flex-direction: column; }
         .otc-header-container { width: 100%; display: flex; justify-content: flex-start; margin-bottom: 10px; padding-left: 270px; }
-        .otc-title { width: 570px; text-align: left; font-size: 18px; font-weight: 500; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #FDB913; }
+        .otc-title { width: 570px; text-align: left; font-size: 18px; font-weight: 500; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #FDB913; text-transform: none; }
 
         .input-card, .flow-card, .sub-card, .status-card, .powerbi-label, .sub-card-wide { 
             box-shadow: none !important; font-weight: 700; border: 1px solid #cbd5e1;
             border-bottom: 3px solid #FDB913 !important; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        .column-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .column-container { display: flex; flex-direction: column; gap: 10px; align-items: center; height: 100%; }
         .align-bottom { justify-content: flex-end; }
-        .input-block-container { display: flex; flex-direction: column; align-items: center; width: 170px; }
-        .top-inputs-wrapper { display: flex; gap: 10px; }
-        .card-icon { width: 16px; height: 16px; margin-right: 4px; }
-        .fan-arrows { display: flex; gap: 80px; color: #94a3b8; font-weight: bold; margin-top: 5px; }
-        .sub-fan-arrows { display: flex; gap: 40px; color: #94a3b8; font-size: 16px; font-weight: bold; }
+        .input-block-container { display: flex; flex-direction: column; align-items: center; width: 170px; margin-bottom: 5px; }
+        .top-inputs-wrapper { display: flex; gap: 10px; align-items: center; justify-content: center; width: 100%; }
+        
+        .card-icon { width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 4px; }
+        .fan-arrows { display: flex; gap: 80px; color: #94a3b8; font-size: 20px; font-weight: bold; margin-top: 5px; }
+        .sub-fan-arrows { display: flex; gap: 40px; color: #94a3b8; font-size: 16px; font-weight: bold; margin-top: -5px; margin-bottom: -5px; }
         .vertical-arrow { font-size: 20px; color: #94a3b8; font-weight: bold; margin: -5px 0; }
 
-        .input-card { background: white; border-radius: 6px; padding: 5px; width: 80px; height: 50px; font-size: 9px; }
-        .flow-card { background: white; border-radius: 8px; padding: 15px; width: 170px; height: 70px; font-size: 12px; }
+        .input-card { background: white; border-radius: 6px; padding: 5px; width: 80px; height: 50px; text-align: center; font-size: 9px; }
+        .flow-card { background: white; border-radius: 8px; padding: 15px; width: 170px; height: 70px; gap: 5px; text-align: center; font-size: 12px; }
         .sub-cards-row { display: flex; gap: 10px; }
-        .sub-card { background: white; border-radius: 6px; padding: 8px; width: 80px; height: 40px; font-size: 9px; }
-        .sub-card-wide { background: white; border-radius: 6px; padding: 8px; width: 170px; height: 40px; font-size: 12px; }
-        .status-card { background: white; border-radius: 6px; padding: 8px; width: 170px; height: 40px; font-size: 12px; }
-        .sub-badge-container { display: flex; gap: 6px; margin-top: 5px; }
-        .sub-badge { border: 1px solid #cbd5e1; border-radius: 4px; padding: 2px 6px; font-size: 9px; background: #f8fafc; }
-        .grid-flow-layout { display: grid; grid-template-columns: auto 50px auto 50px auto 50px auto; align-items: start; gap: 10px; }
-        .arrow-connector { display: flex; align-items: center; height: 70px; }
-        .arrow-svg { stroke: #FDB913; width: 40px; }
+        .sub-card { background: white; border-radius: 6px; padding: 8px; width: 80px; height: 40px; text-align: center; font-size: 9px; }
+        .sub-card-wide { background: white; border-radius: 6px; padding: 8px; width: 170px; height: 40px; text-align: center; font-size: 12px; }
+        .status-card { background: white; border-radius: 6px; padding: 8px; width: 170px; height: 40px; text-align: center; font-size: 12px; }
+        .sub-badge-container { display: flex; gap: 6px; width: 100%; justify-content: center; margin-top: 5px; }
+        .sub-badge { border: 1px solid #cbd5e1; border-radius: 4px; padding: 2px 6px; font-size: 9px; background: #f8fafc; color: #475569; display: flex; align-items: center; }
+        .grid-flow-layout { display: grid; grid-template-columns: auto 50px auto 50px auto 50px auto; align-items: start; justify-items: center; gap: 10px; }
+        .arrow-connector { display: flex; justify-content: center; align-items: center; align-self: center; height: 70px; }
+        .arrow-svg { stroke: #FDB913; stroke-width: 1.5; fill: none; width: 40px; }
         .powerbi-side-panel { display: flex; flex-direction: column; gap: 15px; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 15px; width: 220px; border-radius: 8px; }
         .powerbi-label { background: white; border-radius: 6px; padding: 12px; font-size: 12px; text-align: center; display: block; }
     </style>
 </head>
 <body>
-
-    <a href="javascript:history.back()" class="back-button" title="Torna indietro">&#8592;</a>
-
     <div class="workflow-container">
         <div class="main-dashboard-content">
             <div class="grid-wrapper">
-                <div class="otc-header-container"><div class="otc-title">Order-to-Cash</div></div>
+                <div class="otc-header-container">
+                    <div class="otc-title">Order-to-Cash</div>
+                </div>
                 
                 <div class="grid-flow-layout">
-                    <!-- Colonna 1 -->
                     <div class="column-container">
                         <div class="input-block-container">
                             <div class="top-inputs-wrapper">
-                                <a href="#" class="input-card">Inserimento Cliente</a>
-                                <a href="#" class="input-card">Gestione Provvigioni</a>
+                                <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/subjectListAnid/1" class="input-card">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" /></svg>Inserimento Cliente</a>
+                                <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/OCPV/1" class="input-card"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 7.756a4.5 4.5 0 1 0 0 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>Gestione Provvigioni</a>
                             </div>
                             <div class="fan-arrows"><span>↖</span><span>↗</span></div>
                         </div>
-                        <a href="#" class="flow-card">Offerte <div class="sub-badge-container"><div class="sub-badge">Web</div><div class="sub-badge">ERP</div></div></a>
+                        <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1" class="flow-card">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 11.625h4.5m-4.5 2.25h4.5m2.121 1.527c-1.171 1.464-3.07 1.464-4.242 0-1.172-1.465-1.172-3.84 0-5.304 1.171-1.464 3.07-1.464 4.242 0M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>Offerte</span>
+                            <div class="sub-badge-container"><div class="sub-badge">Web</div><div class="sub-badge">ERP</div></div>
+                        </a>
                         <div class="sub-fan-arrows"><span>↙</span><span>↘</span></div>
                         <div class="sub-cards-row">
-                            <a href="#" class="sub-card">Scontistiche</a>
-                            <a href="#" class="sub-card">Campagne</a>
+                            <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/discounts/1" class="sub-card"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" /></svg>Scontistiche</a>
+                            <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/salescampaigns/1" class="sub-card"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" /></svg>Campagne</a>
                         </div>
                     </div>
                     
                     <div class="arrow-connector"><svg viewBox="0 0 40 10" class="arrow-svg"><line x1="0" y1="5" x2="35" y2="5"/><polygon points="35,5 30,2 30,8" fill="#FDB913"/></svg></div>
                     
-                    <!-- Colonna 2 -->
                     <div class="column-container align-bottom">
-                        <a href="#" class="flow-card">Gestione Ordine</a>
+                        <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1" class="flow-card"><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" /></svg>Gestione Ordine</span></a>
                         <div class="vertical-arrow">↓</div>
-                        <div class="sub-card-wide">Order Tools</div>
+                        <div class="sub-card-wide"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" /></svg>Order Tools</div>
                     </div>
                     
                     <div class="arrow-connector"><svg viewBox="0 0 40 10" class="arrow-svg"><line x1="0" y1="5" x2="35" y2="5"/><polygon points="35,5 30,2 30,8" fill="#FDB913"/></svg></div>
                     
-                    <!-- Colonna 3 -->
                     <div class="column-container align-bottom">
-                        <a href="#" class="flow-card">Conferma Ordine</a>
+                        <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/salesOrder/1" class="flow-card"><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>Conferma Ordine</span></a>
                         <div class="vertical-arrow">↓</div>
-                        <a href="#" class="sub-card-wide">Tracking</a>
+                        <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/dwa_oc_sh_fa/1" class="sub-card-wide"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" /></svg>Tracking</a>
                     </div>
                     
                     <div class="arrow-connector"><svg viewBox="0 0 40 10" class="arrow-svg"><line x1="0" y1="5" x2="35" y2="5"/><polygon points="35,5 30,2 30,8" fill="#FDB913"/></svg></div>
                     
-                    <!-- Colonna 4 -->
                     <div class="column-container align-bottom">
-                        <a href="#" class="flow-card">Passaggio a WMS</a>
+                        <a href="https://diapdemo.formula.it:8282/due/#/home/workArea/dnow2/SHPS/1" class="flow-card"><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>Passaggio a WMS</span></a>
                         <div class="vertical-arrow">↓</div>
-                        <div class="status-card" onclick="apriStatus()">Status</div>
+                        <div class="status-card">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" /></svg>Status</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="powerbi-side-panel">
-                <div style="font-size: 10px; font-weight: bold; color: #64748b; text-align: center;">ANALYTICS REPORTS</div>
-                <a class="powerbi-label" href="#">📊 Overview Vendite</a>
-                <a class="powerbi-label" href="#">📈 Marginalità</a>
-                <a class="powerbi-label" href="#">🌿 Sales Channel</a>
+                <div style="font-size: 10px; font-weight: bold; color: #64748b; text-align: center; margin-bottom: 5px;">ANALYTICS REPORTS</div>
+                <a class="powerbi-label" href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a">📊 Overview Vendite</a>
+                <a class="powerbi-label" href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a">📈 Marginalità</a>
+                <a class="powerbi-label" href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a">🌿 Sales Channel</a>
             </div>
         </div>
     </div>
-
-    <!-- Modale Status -->
-    <div id="status-overlay" onclick="this.style.display='none'">
-        <div class="status-table-container" onclick="event.stopPropagation()">
-            <h2>Stato Preparazione Ordini</h2>
-            <table id="status-table">
-                <thead>
-                    <tr><th>N° Ordine</th><th>Cliente</th><th>Data Consegna</th><th>Da Prep.</th><th>Preparati</th><th>Stato</th></tr>
-                </thead>
-                <tbody id="table-body"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        const ordini = [
-            {n: "ORD001", cli: "Rossi Srl", data: "20/07/2026", tot: 10, prep: 10, col: "#22c55e"},
-            {n: "ORD002", cli: "Bianchi Spa", data: "21/07/2026", tot: 50, prep: 45, col: "#f59e0b"},
-            {n: "ORD003", cli: "Verdi Srl", data: "22/07/2026", tot: 20, prep: 0, col: "#ef4444"},
-            {n: "ORD004", cli: "Neri Srl", data: "23/07/2026", tot: 30, prep: 30, col: "#22c55e"},
-            {n: "ORD005", cli: "Blu Spa", data: "24/07/2026", tot: 15, prep: 5, col: "#f59e0b"},
-            {n: "ORD006", cli: "Gialli Srl", data: "25/07/2026", tot: 100, prep: 100, col: "#22c55e"},
-            {n: "ORD007", cli: "Viola Srl", data: "26/07/2026", tot: 40, prep: 10, col: "#ef4444"},
-            {n: "ORD008", cli: "Arancio Spa", data: "27/07/2026", tot: 12, prep: 12, col: "#22c55e"},
-            {n: "ORD009", cli: "Grigio Srl", data: "28/07/2026", tot: 25, prep: 20, col: "#f59e0b"},
-            {n: "ORD010", cli: "Rosa Srl", data: "29/07/2026", tot: 60, prep: 0, col: "#ef4444"},
-            {n: "ORD011", cli: "Marrone Srl", data: "30/07/2026", tot: 80, prep: 40, col: "#f59e0b"}
-        ];
-
-        function apriStatus() {
-            const tbody = document.getElementById('table-body');
-            tbody.innerHTML = "";
-            ordini.forEach(o => {
-                tbody.innerHTML += `<tr>
-                    <td>${o.n}</td><td>${o.cli}</td><td>${o.data}</td>
-                    <td>${o.tot}</td><td>${o.prep}</td>
-                    <td><div class="semaforo" style="background:${o.col}"></div></td>
-                </tr>`;
-            });
-            document.getElementById('status-overlay').style.display = 'flex';
-        }
-    </script>
 </body>
 </html>
