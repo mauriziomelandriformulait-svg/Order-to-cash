@@ -15,7 +15,7 @@
         .otc-header-container { width: 100%; display: flex; justify-content: flex-start; margin-bottom: 10px; padding-left: 270px; }
         .otc-title { width: 570px; text-align: left; font-size: 18px; font-weight: 500; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #FDB913; }
         
-        .input-card, .flow-card, .sub-card, .status-card, .powerbi-label, .sub-card-wide { 
+        .input-card, .flow-card, .sub-card, .status-card, .sub-card-wide { 
             box-shadow: none !important; font-weight: 700; border: 1px solid #cbd5e1;
             border-bottom: 3px solid #FDB913 !important; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
@@ -39,8 +39,6 @@
         .grid-flow-layout { display: grid; grid-template-columns: auto 50px auto 50px auto 50px auto; align-items: start; justify-items: center; gap: 10px; }
         .arrow-connector { display: flex; justify-content: center; align-items: center; align-self: center; height: 70px; }
         .arrow-svg { stroke: #FDB913; stroke-width: 1.5; fill: none; width: 40px; }
-        .powerbi-side-panel { display: flex; flex-direction: column; gap: 15px; background: #f8fafc; border: 1px dashed #cbd5e1; padding: 15px; width: 220px; border-radius: 8px; }
-        .powerbi-label { background: white; border-radius: 6px; padding: 12px; font-size: 12px; text-align: center; display: block; border-bottom: 3px solid #FDB913 !important; border: 1px solid #cbd5e1; }
     </style>
 </head>
 <body>
@@ -123,14 +121,6 @@
                         <div class="status-card"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="card-icon"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" /></svg>Status</div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Analytics -->
-            <div class="powerbi-side-panel">
-                <div style="font-size: 10px; font-weight: bold; color: #64748b; text-align: center; margin-bottom: 5px;">ANALYTICS REPORTS</div>
-                <a href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a" target="_blank" class="powerbi-label">📊 Overview Vendite</a>
-                <a href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a" target="_blank" class="powerbi-label">📈 Marginalità</a>
-                <a href="https://app.powerbi.com/reportEmbed?reportId=60ae1b03-6d1b-4c0c-905d-ffc92cecb369&autoAuth=true&ctid=ba941aaf-4ef6-4eae-8cee-441f432b943a" target="_blank" class="powerbi-label">🌿 Sales Channel</a>
             </div>
         </div>
     </div>
